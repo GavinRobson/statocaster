@@ -6,8 +6,7 @@ import valorantRoutes from "./routes/valorantRoutes";
 
 const app = express();
 
-// TODO: Change to env file
-const PORT = 3000;
+const PORT = process.env.PORT || "3000";
 
 app.use(cors());
 app.use(express.json());

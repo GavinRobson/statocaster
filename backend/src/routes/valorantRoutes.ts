@@ -1,9 +1,9 @@
 import express from "express";
-import { getValorantAccount } from "../controllers/valorantController"
+import { getValorantAccountById } from "../controllers/valorantController"
 
 const router = express.Router();
 
 // Define routes here
-router.get("/account/:username/:tag", getValorantAccount)
+router.get("/account/:username/:tag", getValorantAccountById)
 
 export default router;
