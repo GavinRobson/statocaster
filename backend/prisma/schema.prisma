@@ -1,0 +1,55 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id        String   @id @default(cuid())
+  username  String
+  tag       String
+  email     String   @unique
+  password  String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  valorantAccounts ValorantAccount[]
+
+  @@unique([username, tag])
+}
+
+model ValorantAccount {
+  id String @id @default(cuid())
+
+  username String
+  tag String
+  rank String?
+  peakRank String?
+  level Int?
+
+  wins Int @default(0)
+  losses Int @default(0)
+
+  userId String 
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  stats ValorantStats?
+
+  @@unique([username, tag])
+}
+
+model ValorantStats {
+  id        String @id @default(cuid())
+
+  headshotPercent Float?
+  kdRatio Float?
+  totalKills Int @default(0)
+  totalDeaths Int @default(0)
+  totalAssists Int @default(0)
+
+  valorantAccountId    String @unique
+  valorantAccount      ValorantAccount @relation(fields: [valorantAccountId], references: [id], onDelete: Cascade)
+}
